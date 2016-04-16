@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/pyprism/Hiren-Jobs-Hunter#readme",
   "dependencies": {
+    "async": "^2.0.0-rc.3",
+    "bluebird": "^3.3.5",
     "cheerio": "^0.20.0",
     "request": "^2.71.0"
   }
