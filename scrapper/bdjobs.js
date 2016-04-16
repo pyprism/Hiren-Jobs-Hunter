@@ -2,10 +2,12 @@
  * Created by prism on 4/15/16.
  */
 var request = require('request'),
-    cheerio = require('cheerio');
+    cheerio = require('cheerio').
+    async = require('async');
 
 
-module.exports = function () {
+//module.exports = function () {
+function  x () {
     var url = 'http://joblist.bdjobs.com/jobsearch.asp?fcatId=8';
     var j = request.jar();
     j.setCookie(request.cookie('JOBSRPP=40'), url);   //set 40 results per page
@@ -18,12 +20,37 @@ module.exports = function () {
         jar: j
     };
 
+    var url = [];
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             $ = cheerio.load(body);
-            var res = $('.job_title_text').text();
-            console.log(res);
-            console.log(res.length);
+           // var res = $('.job_title_text a').text();
+            var res = $('.job_title_text a').get();
+            res.map(function (x) {
+               // url.push('http://joblist.bdjobs.com/' + x['attribs']['href']);
+                var option = {
+                    url: 'http://joblist.bdjobs.com/' + x['attribs']['href'],
+                    jar: j
+                };
+                i = 0
+                request(option, function (error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        $ = cheerio.load(body);
+                       var text = $('.comp_wrapper').text();
+                        //new RegExp($('.comp_wrapper').text(), 'ig');
+                        if(text.match(/nodejs/ig))
+                            url['python'] = 'http://joblist.bdjobs.com/' + x['attribs']['href'];
+                        i = i + 1;
+                        console.log(i)
+                    }
+                    console.log(url);
+                    });
+                //console.log(url);
+            });
         }
     })
+
+
 }
+
+x();
