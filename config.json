@@ -1,0 +1,10 @@
+{
+  "secret_key": "",
+  "db_name": "",
+  "db_user": "",
+  "db_pass": "",
+  "mailgun_domain": "",
+  "mailgun_key": "",
+  "mailgun_from": "",
+  "mailgun_to": ""
+}
