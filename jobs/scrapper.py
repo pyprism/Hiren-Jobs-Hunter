@@ -2,12 +2,13 @@ from bs4 import BeautifulSoup
 import requests
 import django
 import os
+import re
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hiren.settings")
 django.setup()
 
 from hiren.settings import JSON_DATA
-from jobs.models import Keyword
+from jobs.models import Keyword, Job
 
 
 def send_message(job):
@@ -24,9 +25,27 @@ def send_message(job):
 
 def bdjobs():
     keywords = Keyword.objects.all()
-    html = requests.get('http://joblist.bdjobs.com/jobsearch.asp?fcatId=8', cookies={'JOBSRPP': 40})
-    soup = BeautifulSoup(html, 'html.parser')
-    print(soup)
+    html = requests.get('http://joblist.bdjobs.com/jobsearch.asp?fcatId=8', cookies={'JOBSRPP': '40'})
+    soup = BeautifulSoup(html.text, 'html.parser')
+    bunny = soup.find_all(class_='job_title_text')
+    jobs = []
+    jobs_format = {'keyword': '', 'link': ''}
+    urls = Job.objects.all()
+    for div in bunny:
+        for anchor in div.find_all('a'):
+            url = 'http://joblist.bdjobs.com/' + anchor.get('href')
+            for obj in urls:  # filter duplicate url that are already send
+                if not url == obj.url:
+                    print('x')
+                    hiren = requests.get(url)
+                    job_post = BeautifulSoup(hiren.text, 'html.parser')
+                    post = job_post.find_all(class_='comp_wrapper')
+                    for keyword in keywords:
+                        if re.findall('\\b' + keyword.keyword + '\\b', str(post), re.I):
+                            jobs_format['keyword'] = keyword.keyword
+                            jobs_format['link'] = url
+                            jobs.append(jobs_format)
+                            Job.objects.create(url=url)
+    return jobs
 
-
-send_message("s")
+print(bdjobs())
