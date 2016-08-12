@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import json
-from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -45,20 +44,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'kombu.transport.django',
+    'django_q',
     'jobs'
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'hiren.urls'
 
@@ -87,9 +86,9 @@ WSGI_APPLICATION = 'hiren.wsgi.application'
 if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
-            'ENGINE':   'django.db.backends.mysql',
-            'NAME':     'travis',
-            'USER':     'travis',
+            'ENGINE':   'django.db.backends.postgresql_psycopg2',
+            'NAME':     'travisci',
+            'USER':     'postgres',
             'PASSWORD': '',
             'HOST':     'localhost',
             'PORT':     '',
@@ -99,13 +98,14 @@ else:
     DATABASES = {
         'default': {
             'NAME': JSON_DATA['db_name'],
-            'ENGINE': 'django.db.backends.mysql',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'USER': JSON_DATA['db_user'],
-            'PASSWORD': JSON_DATA['db_pass'],
+            'PASSWORD': JSON_DATA['db_password'],
             'HOST': 'localhost',
             'PORT': '',
+            'CONN_MAX_AGE': 600,
             }
-    }
+}
 
 
 # Internationalization
@@ -128,14 +128,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + '/' + "static"
 
-BROKER_URL = 'django://'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-CELERYBEAT_SCHEDULE = {
-    'run-every-1-hour': {
-        'task': 'jobs.tasks.run',
-        'schedule': crontab(hour='*'),
-    },
+Q_CLUSTER = {
+    'name': 'DjangORM',
+    'workers': 1    ,
+    'timeout': 90,
+    'retry': 120,
+    'queue_limit': 50,
+    'bulk': 10,
+    'orm': 'default'
 }
