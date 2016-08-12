@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 import requests
 import django
 import os
@@ -12,6 +13,11 @@ from jobs.models import Keyword, Job
 
 
 def send_message(job):
+    """
+    Send email via mailgun
+    :param job:
+    :return:
+    """
     try:
         requests.post("https://api.mailgun.net/v3/" + JSON_DATA['mailgun_domain'] + "/messages",
                       auth=("api", JSON_DATA['mailgun_key']),
@@ -25,8 +31,14 @@ def send_message(job):
 
 
 def bdjobs():
+    """
+    BDJob scrapper
+    :return result:
+    """
+    ua = UserAgent(cache=False)
     keywords = Keyword.objects.all()
-    html = requests.get('http://joblist.bdjobs.com/jobsearch.asp?fcatId=8', cookies={'JOBSRPP': '40'})
+    headers = {'User-Agent': ua.random}  # because they are blocking :/ without user agent
+    html = requests.get('http://jobs.bdjobs.com/jobsearch.asp?fcatId=8&icatId=', cookies={'JOBSRPP': '40'}, headers=headers)
     soup = BeautifulSoup(html.text, 'html.parser')
     bunny = soup.find_all(class_='job_title_text')
     jobs = []
@@ -48,6 +60,10 @@ def bdjobs():
 
 
 def job_runner():
+    """
+    just a dumb function
+    :return:
+    """
     jobs = bdjobs()
     if jobs:
         for job in jobs:
