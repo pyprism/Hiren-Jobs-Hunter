@@ -40,16 +40,16 @@ def bdjobs():
     headers = {'User-Agent': ua.random}  # because they are blocking :/ without user agent
     html = requests.get('http://jobs.bdjobs.com/jobsearch.asp?fcatId=8&icatId=', cookies={'JOBSRPP': '40'}, headers=headers)
     soup = BeautifulSoup(html.text, 'html.parser')
-    bunny = soup.find_all(class_='job_title_text')
+    bunny = soup.find_all(class_='job-title-text')
     jobs = []
     jobs_format = {'keyword': '', 'link': ''}
     for div in bunny:
         for anchor in div.find_all('a'):
-            url = 'http://joblist.bdjobs.com/' + anchor.get('href')   # first get the link
+            url = 'http://jobs.bdjobs.com/' + anchor.get('href')   # first get the link
             if Job.objects.filter(url=url).exists() is False:  # check for duplicate url that are already scraped
                     hiren = requests.get(url)  # get the job post
                     job_post = BeautifulSoup(hiren.text, 'html.parser')
-                    post = job_post.find_all(class_='comp_wrapper')   # get the job contents
+                    post = job_post.find_all(class_='left')   # get the job contents
                     for keyword in keywords:
                         if re.findall('\\b' + keyword.keyword + '\\b', str(post), re.I):
                             jobs_format['keyword'] = keyword.keyword
@@ -68,3 +68,4 @@ def job_runner():
     if jobs:
         for job in jobs:
             send_message(job)
+
