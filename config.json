@@ -2,7 +2,7 @@
   "secret_key": "",
   "db_name": "",
   "db_user": "",
-  "db_pass": "",
+  "db_password": "",
   "mailgun_domain": "",
   "mailgun_key": "",
   "mailgun_from": "",
