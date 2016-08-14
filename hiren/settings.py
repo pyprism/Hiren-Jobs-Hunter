@@ -130,10 +130,9 @@ STATIC_ROOT = BASE_DIR + '/' + "static"
 
 Q_CLUSTER = {
     'name': 'DjangORM',
-    'workers': 1    ,
-    'timeout': 90,
+    'workers': 1,
     'retry': 120,
-    'queue_limit': 50,
+    'queue_limit': 10,
     'bulk': 10,
     'orm': 'default'
 }
