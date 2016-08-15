@@ -2,8 +2,7 @@
 Description=uWSGI instance to serve Hiren-Jobs-Hunter
 
 [Service]
-User=prism
-ExecStart=/bin/bash -c 'cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --ini hiren.ini'
+ExecStart=/bin/bash -c 'su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --ini hiren.ini'
 
 [Install]
 WantedBy=multi-user.target
