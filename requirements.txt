@@ -1,7 +1,7 @@
 arrow==0.10.0
 beautifulsoup4==4.5.3
 blessed==1.14.1
-Django==1.10.4
+Django==1.10.5
 django-picklefield==0.3.2
 django-q==0.7.18
 fake-useragent==0.1.4
