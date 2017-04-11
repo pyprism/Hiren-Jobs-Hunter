@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from .scrapper import job_runner
 
-# Create your views here.
+
+def scheduler(request):
+    """
+    view for cron based scheduler
+    :param request:
+    :return:
+    """
+    job_runner()
+    return HttpResponse("Hello bunny :D")
+
