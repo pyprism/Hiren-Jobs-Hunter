@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from jobs import views
 
 urlpatterns = [
+    url(r'^scheduler/', views.scheduler),
     url(r'^', admin.site.urls),
 ]
