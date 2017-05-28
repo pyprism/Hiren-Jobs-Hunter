@@ -8,7 +8,7 @@ fake-useragent==0.1.7
 future==0.16.0
 psycopg2==2.7.1
 python-dateutil==2.6.0
-requests==2.14.2
+requests==2.16.4
 six==1.10.0
 uWSGI==2.0.15
 wcwidth==0.1.7
