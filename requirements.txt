@@ -9,6 +9,6 @@ future==0.16.0
 psycopg2==2.7.3
 python-dateutil==2.6.1
 requests==2.18.4
-six==1.10.0
+six==1.11.0
 uWSGI==2.0.15
 wcwidth==0.1.7
