@@ -3,7 +3,7 @@ beautifulsoup4==4.6.0
 blessed==1.14.2
 Django==2.0.1
 django-picklefield==1.0.0
-django-q==0.9.0
+django-q==0.9.1
 fake-useragent==0.1.8
 future==0.16.0
 psycopg2==2.7.3
