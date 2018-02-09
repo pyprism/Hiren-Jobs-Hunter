@@ -6,5 +6,6 @@
   "mailgun_domain": "",
   "mailgun_key": "",
   "mailgun_from": "",
-  "mailgun_to": ""
+  "mailgun_to": "",
+  "sentry_dsn": ""
 }
