@@ -3,7 +3,12 @@ Description=uWSGI instance to serve Hiren-Jobs-Hunter
 
 [Service]
 #ExecStart=/bin/bash -c 'supervisord -c /home/prism/prod/Hiren-Jobs-Hunter/supervisor.conf; su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --ini hiren.ini'
-ExecStart=/bin/bash -c 'su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --ini hiren.ini'
+
+ExecStart=/bin/bash -c 'su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --memory-report --enable-threads --ini jobs.ini'
+
+ExecReload=/bin/bash -c 'su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --reload /run/jobs.pid'
+
+ExecStop=/bin/bash -c ''su prism; cd /home/prism/prod/Hiren-Jobs-Hunter; source .env/bin/activate; uwsgi --stop /run/jobs.pid'
 
 [Install]
 WantedBy=multi-user.target
