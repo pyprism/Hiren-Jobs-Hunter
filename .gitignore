@@ -65,4 +65,5 @@ target/
 config.local.json
 .env/
 static/admin/
-
+logs/*.log*
+logs/*log*
