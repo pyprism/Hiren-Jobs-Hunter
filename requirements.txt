@@ -6,7 +6,7 @@ chardet==3.0.4
 Django==2.0.2
 django-picklefield==1.0.0
 django-q==0.9.1
-fake-useragent==0.1.9
+fake-useragent==0.1.10
 future==0.16.0
 idna==2.6
 psycopg2-binary==2.7.4
