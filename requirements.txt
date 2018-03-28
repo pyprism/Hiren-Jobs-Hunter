@@ -10,7 +10,7 @@ fake-useragent==0.1.10
 future==0.16.0
 idna==2.6
 psycopg2-binary==2.7.4
-python-dateutil==2.7.1
+python-dateutil==2.7.2
 pytz==2018.3
 raven==6.6.0
 requests==2.18.4
