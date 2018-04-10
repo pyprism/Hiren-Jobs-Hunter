@@ -3,7 +3,7 @@ beautifulsoup4==4.6.0
 blessed==1.14.2
 certifi==2018.1.18
 chardet==3.0.4
-Django==2.0.3
+Django==2.0.4
 django-picklefield==1.0.0
 django-q==0.9.4
 fake-useragent==0.1.10
