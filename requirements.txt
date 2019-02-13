@@ -1,5 +1,5 @@
 arrow==0.12.1
-beautifulsoup4==4.6.0
+beautifulsoup4==4.7.1
 blessed==1.14.2
 certifi==2018.1.18
 chardet==3.0.4
