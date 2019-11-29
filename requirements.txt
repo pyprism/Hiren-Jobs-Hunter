@@ -1,7 +1,7 @@
 arrow==0.12.1
 beautifulsoup4==4.7.1
 blessed==1.15.0
-certifi==2018.1.18
+certifi==2019.11.28
 chardet==3.0.4
 Django==2.2
 django-picklefield==2.0
