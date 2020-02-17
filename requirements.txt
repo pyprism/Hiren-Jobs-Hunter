@@ -8,7 +8,7 @@ django-picklefield==2.0
 django-q==1.0.1
 fake-useragent==0.1.10
 future==0.16.0
-idna==2.6
+idna==2.9
 psycopg2-binary==2.8.1
 python-dateutil==2.8.0
 pytz==2019.1
