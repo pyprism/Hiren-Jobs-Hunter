@@ -4,7 +4,6 @@ python:
 
 cache: pip
 
-
 addons:
   postgresql: "9.5"
 
